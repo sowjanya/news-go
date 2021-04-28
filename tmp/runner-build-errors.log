@@ -1,0 +1,2 @@
+go: finding github.com/freshman-tech/news-demo-starter-files latest
+build github.com/sowjanya/news-demo-go: cannot load github.com/freshman-tech/news-demo-starter-files/news: module github.com/freshman-tech/news-demo-starter-files@latest found (v0.0.0-20201122184839-d1948711ac2a), but does not contain package github.com/freshman-tech/news-demo-starter-files/news
