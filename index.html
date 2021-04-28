@@ -10,7 +10,6 @@
 <body>
   <main>
     <header>
-      <a class="logo" href="/">Newsss Demo</a>
       <form action="/search" method="GET">
         <input
           autofocus
@@ -20,14 +19,10 @@
           type="search"
           name="q"
         />
-      </form>
-      <a
-        href="https://github.com/freshman-tech/news"
-        class="button github-button"
-        >View on GitHub</a
-      >
+      <a>
     </header>
     <section class="container">
+      </div>
       <ul class="search-results">
         {{ range.Results.Articles }}
         <li class="news-article">
@@ -38,12 +33,31 @@
             <p class="description">{{ .Description }}</p>
             <div class="metadata">
               <p class="source">{{ .Source.Name }}</p>
+              <time class="published-date">{{ .FormatPublishedDate }}</time>
             </div>
           </div>
         </li>
         {{ end }}
       </ul>
     </section>
+    <div class="pagination">
+      {{ if . }}
+        {{ if (gt .NextPage 2) }}
+        <a
+          href="/search?q={{ .Query }}&page={{ .PreviousPage }}"
+          class="button previous-page"
+          >Previous</a
+        >
+        {{ end }}
+        {{ if (ne .IsLastPage true) }}
+        <a
+          href="/search?q={{ .Query }}&page={{ .NextPage }}"
+          class="button next-page"
+          >Next</a
+        >
+        {{ end }}
+      {{ end }}
+    </div>
   </main>
 </body>
 </html>

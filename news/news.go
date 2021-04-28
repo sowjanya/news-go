@@ -18,8 +18,8 @@ type Article struct {
 	Title       string    `json:"title"`
 	Description string    `json:"description"`
 	URL         string    `json:"url"`
-	Urltoimage  string    `json:"urlToImage"`
-	Publishedat time.Time `json:"publishedAt"`
+	UrltoImage  string    `json:"urlToImage"`
+	PublishedAt time.Time `json:"publishedAt"`
 	Content     string    `json:"content"`
 }
 
@@ -63,4 +63,9 @@ func NewClient(httpClient *http.Client, key string, pageSize int) *Client {
 	}
 
 	return &Client{httpClient, key, pageSize}
+}
+
+func (article *Article) FormatPublishedDate() string {
+	year, month, day := article.PublishedAt.Date()
+	return fmt.Sprintf("%v %d, %d", month, day, year)
 }

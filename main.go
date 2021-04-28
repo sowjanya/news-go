@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/sowjanya/news-go/news"
 	"html/template"
@@ -91,6 +90,11 @@ func searchHandler(newsapi *news.Client) http.HandlerFunc {
 			Results:    results,
 		}
 
+		ok := !search.IsLastPage()
+		if ok {
+			search.NextPage++
+		}
+
 		buf := &bytes.Buffer{}
 		err = tpl.Execute(buf, search)
 		if err != nil {
@@ -100,4 +104,19 @@ func searchHandler(newsapi *news.Client) http.HandlerFunc {
 
 		buf.WriteTo(w)
 	}
+}
+
+func (s *Search) IsLastPage() bool {
+	return s.NextPage >= s.TotalPages
+}
+
+func (s *Search) CurrentPage() int {
+	if s.NextPage == 1 {
+		return s.NextPage
+	}
+	return s.NextPage - 1
+}
+
+func (s *Search) PreviousPage() int {
+	return s.CurrentPage() - 1
 }
